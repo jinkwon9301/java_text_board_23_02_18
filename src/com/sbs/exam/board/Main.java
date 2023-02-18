@@ -1,5 +1,7 @@
 package com.sbs.exam.board;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /*
@@ -13,12 +15,28 @@ public class Main {
     int articleLastId = 0;
     Article lastArticle = null;
 
+    List<Article> articles = new ArrayList<>();
+
+    // test
+    articles.add(new Article(1, "제목1", "내용1"));
+    articles.add(new Article(2, "제목2", "내용2"));
+    articles.add(new Article(3, "제목3", "내용3"));
+
     System.out.println("== 게시판 v 0.1 ==");
     System.out.println("== 프로그램 시작 ==");
     while (true) {
       System.out.printf("명령 ) ");
       String cmd = sc.nextLine();
       if (cmd.equals("exit")) break;
+      else if (cmd.equals("usr/article/list")) {
+        System.out.println("== 게시물 리스트 ==");
+        System.out.println("-------------------");
+        System.out.println("번호 / 제목");
+        System.out.println("-------------------");
+        for (Article article : articles) {
+          System.out.printf("%d / %s\n", article.id, article.title);
+        }
+      }
       else if (cmd.equals("usr/article/detail")) {
 
         if (lastArticle == null) {
