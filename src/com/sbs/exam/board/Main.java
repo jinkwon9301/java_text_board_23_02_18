@@ -35,8 +35,8 @@ public class Main {
         System.out.println("-------------------");
         System.out.println("번호 / 제목");
         System.out.println("-------------------");
-        for (Article article : articles) {
-          System.out.printf("%d / %s\n", article.id, article.title);
+        for (int i = articles.size() - 1; i >= 0; i--) {
+          System.out.printf("%d / %s\n", articles.get(i).id, articles.get(i).title);
         }
       }
       else if (cmd.equals("usr/article/detail")) {
