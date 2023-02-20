@@ -30,49 +30,11 @@ public class Main {
       Rq rq = new Rq(cmd);
       Map<String, String> params = rq.getParams();
 
-      if (rq.getUrlPath().equals("exit")) break;
-      else if (rq.getUrlPath().equals("usr/article/list")) {
-        System.out.println("== 게시물 리스트 ==");
-        System.out.println("-------------------");
-        System.out.println("번호 / 제목");
-
-        // 검색 시작
-        List<Article> filteredArticles = articles;
-
-        String searchKeyword = null;
-
-        if (params.containsKey("searchKeyword")) {
-          searchKeyword = params.get("searchKeyword");
-        }
-
-        filteredArticles = new ArrayList<>();
-
-        for (Article article : articles) {
-          boolean matched = article.title.contains(searchKeyword) || article.body.contains(searchKeyword);
-
-          if (matched) {
-            filteredArticles.add(article);
-          }
-        }
-
-        List<Article> sortedArticles = filteredArticles;
-        boolean orderByDesc = true;
-
-        if (params.containsKey("orderBy") && params.get("orderBy").equals("idAsc")) {
-          orderByDesc = false;
-        }
-
-        if (orderByDesc) {
-          sortedArticles = Util.reverseList(sortedArticles);
-        }
-
-        for (Article article : sortedArticles) {
-            System.out.printf("%d / %s\n", article.id, article.title);
-        }
-
-        System.out.println("-------------------");
-      }
-      else if (rq.getUrlPath().equals("usr/article/detail")) {
+      if (rq.getUrlPath().equals("exit")) {
+        break;
+      } else if (rq.getUrlPath().equals("usr/article/list")) {
+        actionUsrArticleList(rq, articles);
+      } else if (rq.getUrlPath().equals("usr/article/detail")) {
         int id = 0;
 
         try {
@@ -119,6 +81,48 @@ public class Main {
     System.out.println("== 프로그램 종료 ==");
 
     sc.close();
+  }
+
+  private static void actionUsrArticleList(Rq rq, List<Article> articles) {
+    System.out.println("== 게시물 리스트 ==");
+    System.out.println("-------------------");
+    System.out.println("번호 / 제목");
+
+    Map<String, String> params = rq.getParams();
+
+    // 검색 시작
+    List<Article> filteredArticles = articles;
+
+    if (params.containsKey("searchKeyword")) {
+      String searchKeyword = params.get("searchKeyword");
+
+      filteredArticles = new ArrayList<>();
+
+      for (Article article : articles) {
+        boolean matched = article.title.contains(searchKeyword) || article.body.contains(searchKeyword);
+
+        if (matched) {
+          filteredArticles.add(article);
+        }
+      }
+    }
+
+    List<Article> sortedArticles = filteredArticles;
+    boolean orderByDesc = true;
+
+    if (params.containsKey("orderBy") && params.get("orderBy").equals("idAsc")) {
+      orderByDesc = false;
+    }
+
+    if (orderByDesc) {
+      sortedArticles = Util.reverseList(sortedArticles);
+    }
+
+    for (Article article : sortedArticles) {
+      System.out.printf("%d / %s\n", article.id, article.title);
+    }
+
+    System.out.println("-------------------");
   }
 }
 class Article {
