@@ -28,6 +28,7 @@ public class Main {
       String cmd = sc.nextLine();
 
       Rq rq = new Rq(cmd);
+      Map<String, String> params = rq.getParams();
 
       if (rq.getUrlPath().equals("exit")) break;
       else if (rq.getUrlPath().equals("usr/article/list")) {
@@ -41,11 +42,15 @@ public class Main {
       }
       else if (rq.getUrlPath().equals("usr/article/detail")) {
 
-        if (lastArticle == null) {
+        int id = Integer.parseInt(params.get("id"));
+
+        Article article = articles.get(id - 1);
+
+        if (id > articles.size()) {
           System.out.println("게시물이 존재하지 않습니다.");
           continue;
         }
-        Article article = lastArticle;
+
         System.out.println("== 게시물 상세내용 ==");
         System.out.printf("번호 : %d\n", article.id);
         System.out.printf("제목 : %s\n", article.title);
