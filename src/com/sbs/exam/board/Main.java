@@ -35,10 +35,25 @@ public class Main {
         System.out.println("== 게시물 리스트 ==");
         System.out.println("-------------------");
         System.out.println("번호 / 제목");
-        System.out.println("-------------------");
-        for (int i = articles.size() - 1; i >= 0; i--) {
-          System.out.printf("%d / %s\n", articles.get(i).id, articles.get(i).title);
+
+        boolean orderByDesc = true;
+
+        if (params.containsKey("orderBy") && params.get("orderBy").equals("idAsc")) {
+          orderByDesc = false;
         }
+
+        if (orderByDesc ) {
+          for (int i = articles.size() - 1; i >= 0; i--) {
+            Article article = articles.get(i);
+            System.out.printf("%d / %s\n", article.id, article.title);
+          }
+        } else {
+          for (Article article : articles) {
+            System.out.printf("%d / %s\n", article.id, article.title);
+          }
+        }
+
+        System.out.println("-------------------");
       }
       else if (rq.getUrlPath().equals("usr/article/detail")) {
         int id = 0;
