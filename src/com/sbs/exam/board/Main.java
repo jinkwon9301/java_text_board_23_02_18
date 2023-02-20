@@ -36,9 +36,27 @@ public class Main {
         System.out.println("-------------------");
         System.out.println("번호 / 제목");
 
-        boolean orderByDesc = true;
+        // 검색 시작
+        List<Article> filteredArticles = articles;
 
-        List<Article> sortedArticles = articles;
+        String searchKeyword = null;
+
+        if (params.containsKey("searchKeyword")) {
+          searchKeyword = params.get("searchKeyword");
+        }
+
+        filteredArticles = new ArrayList<>();
+
+        for (Article article : articles) {
+          boolean matched = article.title.contains(searchKeyword) || article.body.contains(searchKeyword);
+
+          if (matched) {
+            filteredArticles.add(article);
+          }
+        }
+
+        List<Article> sortedArticles = filteredArticles;
+        boolean orderByDesc = true;
 
         if (params.containsKey("orderBy") && params.get("orderBy").equals("idAsc")) {
           orderByDesc = false;
