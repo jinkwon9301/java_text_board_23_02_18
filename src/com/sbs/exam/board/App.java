@@ -29,6 +29,8 @@ public class App {
         Container.usrArticleController.actionModify(rq);
       } else if (rq.getUrlPath().equals("usr/article/delete")) {
         Container.usrArticleController.actionDelete(rq);
+      } else if (rq.getUrlPath().equals("usr/member/join")) {
+        Container.usrMemberController.actionJoin(rq);
       } else {
         System.out.printf("입력된 명령어 : %s\n", cmd);
       }

@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 public class UsrArticleController {
-  int articleLastId;
-  List<Article> articles;
+  private int articleLastId;
+  private List<Article> articles;
 
   UsrArticleController() {
     articleLastId = 0;
