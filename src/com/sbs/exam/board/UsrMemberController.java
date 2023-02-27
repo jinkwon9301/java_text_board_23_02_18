@@ -90,7 +90,15 @@ public class UsrMemberController {
   }
 
   public void actionLogout(Rq rq) {
-    rq.removeSessionAttr("loginedMember");
+    Member loginedMember = (Member) Container.session.getAttribute("loginedMember");
+
+    if (loginedMember == null) {
+      System.out.println("로그인 후 이용해주세요.");
+      return;
+    }
+    else {
+      rq.removeSessionAttr("loginedMember");
+    }
 
     System.out.println("로그아웃 되었습니다.");
   }
