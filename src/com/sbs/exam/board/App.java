@@ -6,12 +6,21 @@ import java.util.Scanner;
 public class App {
   void run() {
     Scanner sc = Container.sc;
+    Session session = Container.getSession();
     Article lastArticle = null;
 
     System.out.println("== 게시판 v 0.1 ==");
     System.out.println("== 프로그램 시작 ==");
     while (true) {
-      System.out.printf("명령 ) ");
+      Member loginedMember = (Member) session.getAttribute("loginedMember");
+
+      String promptName = "명령어";
+
+      if (loginedMember != null) {
+        promptName = loginedMember.loginId;
+      }
+
+      System.out.printf("%s ) ", promptName);
       String cmd = Container.sc.nextLine();
 
       Rq rq = new Rq(cmd);
@@ -19,19 +28,19 @@ public class App {
 
       if (rq.getUrlPath().equals("exit")) {
         break;
-      } else if (rq.getUrlPath().equals("usr/article/list")) {
+      } else if (rq.getUrlPath().equals("/usr/article/list")) {
         Container.usrArticleController.actionList(rq);
-      } else if (rq.getUrlPath().equals("usr/article/detail")) {
+      } else if (rq.getUrlPath().equals("/usr/article/detail")) {
         Container.usrArticleController.actionDetail(rq);
-      } else if (rq.getUrlPath().equals("usr/article/write")) {
+      } else if (rq.getUrlPath().equals("/usr/article/write")) {
         Container.usrArticleController.actionWrite(rq);
-      } else if (rq.getUrlPath().equals("usr/article/modify")) {
+      } else if (rq.getUrlPath().equals("/usr/article/modify")) {
         Container.usrArticleController.actionModify(rq);
-      } else if (rq.getUrlPath().equals("usr/article/delete")) {
+      } else if (rq.getUrlPath().equals("/usr/article/delete")) {
         Container.usrArticleController.actionDelete(rq);
-      } else if (rq.getUrlPath().equals("usr/member/join")) {
+      } else if (rq.getUrlPath().equals("/usr/member/join")) {
         Container.usrMemberController.actionJoin(rq);
-      } else if (rq.getUrlPath().equals("usr/member/login")) {
+      } else if (rq.getUrlPath().equals("/usr/member/login")) {
         Container.usrMemberController.actionLogin(rq);
       } else {
         System.out.printf("입력된 명령어 : %s\n", cmd);
