@@ -45,5 +45,11 @@ public class Rq {
 
     session.setAttribute(key, value);
   }
+
+  public void removeSessionAttr(String key) {
+    Session session = Container.getSession();
+
+    session.removeAttribute(key);
+  }
 }
 

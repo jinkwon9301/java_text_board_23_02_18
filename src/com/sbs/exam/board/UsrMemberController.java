@@ -88,4 +88,10 @@ public class UsrMemberController {
     }
     return null;
   }
+
+  public void actionLogout(Rq rq) {
+    rq.removeSessionAttr("loginedMember");
+
+    System.out.println("로그아웃 되었습니다.");
+  }
 }
